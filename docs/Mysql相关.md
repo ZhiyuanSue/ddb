@@ -18,5 +18,16 @@ service mysql start
 ```
 mysql -uroot -p
 ```
-登录
-密码也是正常配的root
+直接回车登录
+
+首先需要改密码，然后重启mysql服务
+```
+ALTER USER 'root'@'%' IDENTIFIED BY 'root';
+use mysql;
+select user,host from user;
+update user set host='%' where user='root';
+select user,host from user;
+exit
+service mysql start
+```
+

@@ -27,13 +27,15 @@ public class App
 		for (File file : file_list){
 			String src_dirname=file.getParent();
 			String filename=file.getName();
-			// System.out.println(src_dirname+"/"+filename);
-			fs.uploadFile(src_dirname,"/",filename);
+			// fs.uploadFile(src_dirname,"/",filename);
 		}
 		System.out.printf("total have %d files\n",file_list.size());
 
 		fs.listFiles("/");
 		fs.close();
+
+		User usr=new User();
+		usr.connect();
     }
 	public static void get_all_files(File dir,List<File> file_list){
 		File[] filelist=dir.listFiles();
