@@ -32,7 +32,6 @@ public class App
 		}
 		System.out.printf("total have %d files\n",file_list.size());
 
-		// fs.uploadFile();
 		fs.listFiles("/");
 		fs.close();
     }

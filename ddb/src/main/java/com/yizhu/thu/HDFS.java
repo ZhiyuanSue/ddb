@@ -78,6 +78,16 @@ public class HDFS{
 				log.debug("create file error:"+HDFS_PATH + dirname + "/" + filename,e);
 		}
 	}
+	public void downloadFile(String hdfs_dirname,String local_dirname,String filename){
+		Path hdfs_p = new Path(HDFS_PATH + hdfs_dirname + "/" + filename);
+		Path local_p = new Path(local_dirname + "/" + filename);
+		
+		try{
+			hdfs.copyToLocalFile(false,hdfs_p,local_p,true);
+		} catch (IOException e){
+			e.printStackTrace();
+		}
+	}
 	public void close(){
 		try{
 			hdfs.close();

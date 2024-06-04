@@ -23,6 +23,7 @@ docker run --name ddb3 -itd --network hadoop-bridge  -v /home/susan/distribute-d
 ```
 
 生成三个docker的container
+注意这里面我还做了文件夹的映射，三个container都将/home/ddb映射到本项目的根目录下（后续文件路径我也会说明，请注意这一点）
 
 在这里，我们默认让ddb1作为master节点
 
@@ -143,15 +144,21 @@ ssh-copy-id -i /root/.ssh/id_ed25519 -p 22 root@hadoop3
 安装jdk，jdk的部分我是直接apt install安装的
 
 
+# 重启docker容器后的恢复
 
 对于docker容器，如果stop了这个docker容器，那么需要首先修改/etc/hosts，因为每次都会改变。
 
 所以需要按照上面的说法，添加hadoop123三行进去。
-
 其次是，启动ssh服务
-
+最后是运行hadoop
 ```
+echo "172.19.0.2      hadoop1
+172.19.0.3      hadoop2
+172.19.0.4      hadoop3" >> /etc/hosts
+
 service ssh start
+
+/usr/local/hadoop/sbin/start-all.sh
 ```
 
 然后才能正常工作
@@ -171,7 +178,11 @@ wget https://archive.apache.org/dist/hadoop/common/hadoop-3.4.0/hadoop-3.4.0.tar
 ```
 vim ~/.bashrc
 
-export PATH=$PATH:/usr/local/hadoop/bin
+export HADOOP_HOME=/usr/local/hadoop
+export PATH=$PATH:$HADOOP_HOME/bin:$HADOOP_HOME/sbin/
+//下面的是为了使用maven来构建java，使用了maven
+export MAVEN_HOME=/home/ddb/apache-maven-3.9.7
+export PATH=$PATH:$MAVEN_HOME/bin
 ```
 
 随后退出
@@ -186,7 +197,7 @@ vim /usr/local/hadoop/etc/hadoop/hadoop-env.sh
 修改
 export JAVA_HOME=/usr
 ```
-
+除此之外，我还使用了maven来构建java项目，我将它放到了/home/ddb/apache-maven-3.9.7这里
 
 
 # 配置Hadoop
