@@ -21,6 +21,19 @@ public class Be_Read extends Table{
     	+"shareNum INT NOT NULL DEFAULT 0,  "
     	+"shareUidList TEXT  "
 		+");";
+	static String sql = "INSERT INTO be_read ("
+		+"id, "
+		+"timestamp, "
+		+"aid, "
+		+"readNum, "
+		+"readUidList, "
+		+"commentNum, "
+		+"commentUidList, "
+		+"agreeNum, "
+		+"agreeUidList, "
+		+"shareNum, "
+		+"shareUidList) "
+		+"VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";  
 	public void init(){
 		connect(2);
 		connect(3);
@@ -29,5 +42,44 @@ public class Be_Read extends Table{
 		insert_new_table(conn_user_3,table_name,table_sql);
 		close(2);
 		close(3);
+	}
+	public void bulk(String dat_file_path){
+
+	}
+	public void insert(
+		Connection conn,
+		Timestamp timestamp,
+		String aid,
+		Integer readNum,
+		String readUidList,
+		Integer commentNum,
+		String commentUidList,
+		Integer agreeNum,
+		String agreeUidList,
+		Integer shareNum,
+		String shareUidList
+	){
+		try (PreparedStatement pstmt = conn.prepareStatement(sql)) {  
+		
+			pstmt.setTimestamp(2, timestamp);  
+			pstmt.setString(3, aid);  
+			pstmt.setInt(4, readNum);  
+			pstmt.setString(5, readUidList);  
+			pstmt.setInt(6, commentNum);  
+			pstmt.setString(7, commentUidList);  
+			pstmt.setInt(8, agreeNum);  
+			pstmt.setString(9, agreeUidList);  
+			pstmt.setInt(10, shareNum);  
+			pstmt.setString(11, shareUidList);  
+		
+			// 执行插入操作  
+			int rowsAffected = pstmt.executeUpdate();  
+			if (rowsAffected > 0) {  
+				System.out.println("Data inserted successfully!");  
+			}  
+		
+		} catch (SQLException e) {  
+			e.printStackTrace();  
+		}
 	}
 }

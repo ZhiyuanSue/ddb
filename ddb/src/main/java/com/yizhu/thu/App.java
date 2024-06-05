@@ -33,10 +33,10 @@ public class App
 		be_read.init();
 		popular_rank.init();
 
-
-		System.out.println("-------------------------[ dbms2 tables ]-------------------------------");
+		// use site2(hadoop2) as dbms1 and use site3(hadoop3) as dbms 2
+		System.out.println("-------------------------[ site2 tables ]-------------------------------");
 		db.listDatabaseTable(2,"ddb");
-		System.out.println("-------------------------[ dbms3 tables ]-------------------------------");
+		System.out.println("-------------------------[ site3 tables ]-------------------------------");
 		db.listDatabaseTable(3,"ddb");
 		fs.close();
 
