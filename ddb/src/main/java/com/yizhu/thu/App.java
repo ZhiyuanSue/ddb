@@ -13,12 +13,15 @@ public class App
     {
         System.out.println( "Start test Hadoop" );
 		HDFS fs=new HDFS();
+		DB db=new DB();
+		User usr=new User();
+
 		fs.init();
-		// bulk_hadoop(fs);
+		bulk_hadoop(fs);
+		db.init();
+
 		fs.close();
 
-		User usr=new User();
-		usr.connect();
     }
 	public static void bulk_hadoop(HDFS fs) throws Exception{
 		//upload all the files and data to the hadoop

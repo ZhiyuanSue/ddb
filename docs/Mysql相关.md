@@ -31,13 +31,10 @@ mysql -uroot -p
 
 首先需要改密码，给权限
 ```
-ALTER USER 'root'@'%' IDENTIFIED BY 'root';
+create user 'root'@'%' identified by 'root';
+flush privileges;
 grant all privileges on *.* to root@'%' with grant option;
 flush privileges;
-use mysql;
-select user,host from user;
-update user set host='%' where user='root';
-select user,host from user;
 exit
 ```
 除此之外，我遇到的另一个坑在于
@@ -51,10 +48,3 @@ bind-address            = 0.0.0.0
 ```
 service mysql restart
 ```
-
-然后我发现还是会access denied
-测试：
-```
-mysql -u root -p -h hadoop2
-```
-返回就是不行
