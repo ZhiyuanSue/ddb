@@ -14,8 +14,13 @@ public class App
         System.out.println( "Start test Hadoop" );
 		HDFS fs=new HDFS();
 		fs.init();
-		// fs.listFiles("/");
-		
+		// bulk_hadoop(fs);
+		fs.close();
+
+		User usr=new User();
+		usr.connect();
+    }
+	public static void bulk_hadoop(HDFS fs) throws Exception{
 		//upload all the files and data to the hadoop
 		File p = new File(local_data_dir+articles);
 		List<File> file_list = new ArrayList<>();
@@ -30,13 +35,8 @@ public class App
 			// fs.uploadFile(src_dirname,"/",filename);
 		}
 		System.out.printf("total have %d files\n",file_list.size());
-
 		fs.listFiles("/");
-		fs.close();
-
-		User usr=new User();
-		usr.connect();
-    }
+	}
 	public static void get_all_files(File dir,List<File> file_list){
 		File[] filelist=dir.listFiles();
 		for (File file : filelist) {

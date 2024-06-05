@@ -7,7 +7,16 @@
 所以，同样的，我们拿hadoop1作为管理节点，hadoop2和hadoop3作为存储节点
 
 首先下载mysql
-直接apt install mysql-server即可
+
+我直接配置的apt install mysql-server-8.0的版本
+如果需要卸载（啊这个环境配起来太难了）
+```
+apt purge mysql-*
+rm -rf /etc/mysql/ /var/lib/mysql/
+apt autoremove
+apt autoclean
+```
+
 然后需要
 ```
 service mysql start
@@ -20,14 +29,32 @@ mysql -uroot -p
 ```
 直接回车登录
 
-首先需要改密码，然后重启mysql服务
+首先需要改密码，给权限
 ```
 ALTER USER 'root'@'%' IDENTIFIED BY 'root';
+grant all privileges on *.* to root@'%' with grant option;
+flush privileges;
 use mysql;
 select user,host from user;
 update user set host='%' where user='root';
 select user,host from user;
 exit
-service mysql start
+```
+除此之外，我遇到的另一个坑在于
+需要修改/etc/mysql/mysql.conf.d下mysqld.cnf文件中
+```
+vim /etc/mysql/mysql.conf.d/mysqld.cnf
+
+bind-address            = 0.0.0.0
+```
+然后重启mysql服务
+```
+service mysql restart
 ```
 
+然后我发现还是会access denied
+测试：
+```
+mysql -u root -p -h hadoop2
+```
+返回就是不行

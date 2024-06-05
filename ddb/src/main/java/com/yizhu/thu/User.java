@@ -13,9 +13,9 @@ public class User{
 	static String driver2 = "com.mysql.cj.jdbc.Driver";
 	static String driver3 = "com.mysql.cj.jdbc.Driver";
 
-	static String url1="jdbc:mysql://hadoop1:3306/mysql?characterEncoding=utf-8&serverTimezone=Asia/Shanghai";
-	static String url2="jdbc:mysql://hadoop2:3306/mysql?characterEncoding=utf-8&serverTimezone=Asia/Shanghai";
-	static String url3="jdbc:mysql://hadoop3:3306/mysql?characterEncoding=utf-8&serverTimezone=Asia/Shanghai";
+	static String url1="jdbc:mysql://hadoop1:3306/mysql?useSSL=false&serverTimezone=Asia/Shanghai";
+	static String url2="jdbc:mysql://hadoop2:3306/mysql?useSSL=false&serverTimezone=Asia/Shanghai";
+	static String url3="jdbc:mysql://hadoop3:3306/mysql?useSSL=false&serverTimezone=Asia/Shanghai";
 	Connection conn = null;
 	public void connect(){
 		try{
