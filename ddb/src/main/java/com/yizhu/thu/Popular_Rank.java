@@ -7,5 +7,15 @@ import java.sql.ResultSet;
 import java.sql.*;
 
 public class Popular_Rank extends Table {
-
+	static String table_name = "popular_rank";
+	static String table_sql = "";
+	public void init(){
+		connect(2);
+		connect(3);
+		// try to create the table
+		insert_new_table(conn_user_2,table_name,table_sql);
+		insert_new_table(conn_user_3,table_name,table_sql);
+		close(2);
+		close(3);
+	}
 }

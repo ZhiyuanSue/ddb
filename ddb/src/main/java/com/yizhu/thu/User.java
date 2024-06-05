@@ -8,8 +8,8 @@ import java.sql.*;
 
 
 public class User extends Table{
-	static String table_name = "USER";
-	static String user_table = "user ("
+	static String table_name = "user";
+	static String table_sql = "user ("
 			+"id INT AUTO_INCREMENT PRIMARY KEY,"	//字符
 			+"timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP,"	//
 			+"uid VARCHAR(255) UNIQUE NOT NULL,"	//
@@ -26,16 +26,19 @@ public class User extends Table{
 			+"obtainedCredits DECIMAL(10, 2) DEFAULT 0.0"
 			+");";
 	public void init(){
-		connect(1);
+		connect(2);
+		connect(3);
 		// try to create the table
-		insert_new_table(conn_user_1);
-		close(1);
+		insert_new_table(conn_user_2,table_name,table_sql);
+		insert_new_table(conn_user_3,table_name,table_sql);
+		close(2);
+		close(3);
 	}
-	public void insert_new_table(Connection conn){
+	public void insert_new_table(Connection conn,String table_name,String table_sql){
 		if(!table_exist(conn,table_name)){
 			System.out.printf("db don't have table: %s, create it\n",table_name);
 			try{
-				String sql="CREATE TABLE "+user_table;
+				String sql="CREATE TABLE "+table_sql;
 				Statement stmt = conn.createStatement();
 				stmt.executeUpdate(sql);
 				stmt.close();
@@ -48,5 +51,8 @@ public class User extends Table{
 		else{
 			System.out.printf("db have user table\n");
 		}
+	}
+	public void bulk(String dat_file_path){
+
 	}
 }

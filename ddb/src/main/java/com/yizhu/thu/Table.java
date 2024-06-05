@@ -70,4 +70,22 @@ public class Table {
             e.printStackTrace();
         }
     }
+	public void insert_new_table(Connection conn,String table_name,String table_sql){
+		if(!table_exist(conn,table_name)){
+			System.out.printf("db don't have table: %s, create it\n",table_name);
+			try{
+				String sql="CREATE TABLE "+table_sql;
+				Statement stmt = conn.createStatement();
+				stmt.executeUpdate(sql);
+				stmt.close();
+			}catch (SQLException e){
+				e.printStackTrace();
+			}
+
+			System.out.println("insert table :"+table_name);
+		}
+		else{
+			System.out.printf("db have user table\n");
+		}
+	}
 }
