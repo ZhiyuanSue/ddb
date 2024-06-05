@@ -15,11 +15,11 @@ public class App
 		HDFS fs=new HDFS();
 		DB db=new DB();
 		// tables
-		User usr=new User();
-		Article art=new Article();
-		Read read = new Read();
-		Be_Read be_read = new Be_Read();
-		Popular_Rank popular_rank = new Popular_Rank();
+		User usr					=	new User();
+		Article art					=	new Article();
+		Read read 					=	new Read();
+		Be_Read be_read 			=	new Be_Read();
+		Popular_Rank popular_rank 	= 	new Popular_Rank();
 
 
 		fs.init();
@@ -28,8 +28,16 @@ public class App
 		db.init();
 
 		usr.init();
+		art.init();
+		read.init();
+		be_read.init();
+		popular_rank.init();
 
-		db.listDatabaseTable(1,"ddb");
+
+		System.out.println("-------------------------[ dbms2 tables ]-------------------------------");
+		db.listDatabaseTable(2,"ddb");
+		System.out.println("-------------------------[ dbms3 tables ]-------------------------------");
+		db.listDatabaseTable(3,"ddb");
 		fs.close();
 
     }

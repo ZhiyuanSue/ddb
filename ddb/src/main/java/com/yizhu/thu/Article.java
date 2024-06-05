@@ -8,7 +8,20 @@ import java.sql.*;
 
 public class Article extends Table {
 	static String table_name = "article";
-	static String table_sql = "";
+	static String table_sql = "article ( " 
+    	+"id INT AUTO_INCREMENT PRIMARY KEY, " 
+    	+"timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP,  "
+    	+"aid VARCHAR(255) NOT NULL UNIQUE, "  
+    	+"title VARCHAR(255) NOT NULL,  "
+    	+"category VARCHAR(255) NOT NULL,  "
+    	+"abstract TEXT,  "
+    	+"articleTags TEXT, "
+    	+"authors TEXT,  "
+    	+"language VARCHAR(10) NOT NULL, "
+    	+"text TEXT NOT NULL,  "
+    	+"image VARCHAR(255),  " 
+    	+"video VARCHAR(255)   "  
+		+");";
 	public void init(){
 		connect(2);
 		connect(3);

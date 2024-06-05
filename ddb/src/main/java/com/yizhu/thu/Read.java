@@ -7,8 +7,18 @@ import java.sql.ResultSet;
 import java.sql.*;
 
 public class Read extends Table{
-	static String table_name = "read";
-	static String table_sql = "";
+	static String table_name = "read_table";
+	static String table_sql = "read_table ("
+    	+"id INT AUTO_INCREMENT PRIMARY KEY,"
+    	+"timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP,"
+    	+"uid VARCHAR(255) NOT NULL,"
+    	+"aid VARCHAR(255) NOT NULL,"
+    	+"readTimeLength INT,"
+    	+"aggreeOrNot BOOLEAN DEFAULT FALSE,"
+    	+"commentOrNot BOOLEAN DEFAULT FALSE,"
+    	+"commentDetail TEXT,"
+    	+"shareOrNot BOOLEAN DEFAULT FALSE"
+		+");";
 	public void init(){
 		connect(2);
 		connect(3);

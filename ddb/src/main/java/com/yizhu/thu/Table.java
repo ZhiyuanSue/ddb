@@ -85,7 +85,7 @@ public class Table {
 			System.out.println("insert table :"+table_name);
 		}
 		else{
-			System.out.printf("db have user table\n");
+			System.out.printf("db have %s table\n",table_name);
 		}
 	}
 }

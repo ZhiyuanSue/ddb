@@ -8,7 +8,12 @@ import java.sql.*;
 
 public class Popular_Rank extends Table {
 	static String table_name = "popular_rank";
-	static String table_sql = "";
+	static String table_sql = "popular_rank (  "
+    	+"id INT AUTO_INCREMENT PRIMARY KEY,  "
+    	+"timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP,  "
+    	+"temporalGranularity VARCHAR(50) NOT NULL,  "
+    	+"articleAidList TEXT NOT NULL  "
+		+");";
 	public void init(){
 		connect(2);
 		connect(3);

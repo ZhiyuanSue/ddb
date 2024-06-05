@@ -8,7 +8,19 @@ import java.sql.*;
 
 public class Be_Read extends Table{
 	static String table_name = "be_read";
-	static String table_sql = "";
+	static String table_sql = "be_read (  "
+    	+"id INT AUTO_INCREMENT PRIMARY KEY,  "
+    	+"timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP,  "
+    	+"aid VARCHAR(255) NOT NULL,  "
+    	+"readNum INT NOT NULL DEFAULT 0,  "
+    	+"readUidList TEXT,  "
+    	+"commentNum INT NOT NULL DEFAULT 0,  "
+    	+"commentUidList TEXT,  "
+    	+"agreeNum INT NOT NULL DEFAULT 0,  "
+    	+"agreeUidList TEXT,  "
+    	+"shareNum INT NOT NULL DEFAULT 0,  "
+    	+"shareUidList TEXT  "
+		+");";
 	public void init(){
 		connect(2);
 		connect(3);
