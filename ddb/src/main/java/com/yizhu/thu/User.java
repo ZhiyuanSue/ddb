@@ -7,61 +7,46 @@ import java.sql.ResultSet;
 import java.sql.*;
 
 
-public class User{
-	static String user = "root";
-	static String pwd = "root";
-
-	static String driver = "com.mysql.cj.jdbc.Driver";
-
-	static String url1="jdbc:mysql://hadoop1:3306/ddb?useSSL=true&allowPublicKeyRetrieval=true&serverTimezone=Asia/Shanghai";
-	static String url2="jdbc:mysql://hadoop2:3306/ddb?useSSL=true&allowPublicKeyRetrieval=true&serverTimezone=Asia/Shanghai";
-	static String url3="jdbc:mysql://hadoop3:3306/ddb?useSSL=true&allowPublicKeyRetrieval=true&serverTimezone=Asia/Shanghai";
-	Connection conn_user_1 = null;
-	Connection conn_user_2 = null;
-	Connection conn_user_3 = null;
-	public void connect(int dbms_num){
-		try{
-			Class.forName(driver);
-			if(dbms_num==1){
-				conn_user_1 = DriverManager.getConnection(url1,user,pwd);
-			} else if(dbms_num==2){
-				conn_user_2 = DriverManager.getConnection(url2,user,pwd);
-			} else if(dbms_num==3){
-				conn_user_3 = DriverManager.getConnection(url3,user,pwd);
-			}
-		} catch (Exception e){
-			e.printStackTrace();
-		}
-	}
+public class User extends Table{
+	static String table_name = "USER";
+	static String user_table = "user ("
+			+"id INT AUTO_INCREMENT PRIMARY KEY,"	//字符
+			+"timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP,"	//
+			+"uid VARCHAR(255) UNIQUE NOT NULL,"	//
+			+"name VARCHAR(255) NOT NULL,"
+			+"gender ENUM('male', 'female', 'Other', 'Unknown') DEFAULT 'Unknown',"
+			+"email VARCHAR(255) UNIQUE NOT NULL,"
+			+"phone VARCHAR(20) NOT NULL,"
+			+"dept VARCHAR(255) NOT NULL,"
+			+"grade VARCHAR(10) NOT NULL,"
+			+"language VARCHAR(50) NOT NULL,"
+			+"region VARCHAR(255) NOT NULL,"
+			+"role VARCHAR(50) NOT NULL,"
+			+"preferTags TEXT,"
+			+"obtainedCredits DECIMAL(10, 2) DEFAULT 0.0"
+			+");";
 	public void init(){
 		connect(1);
-		// try to create the
-		try{
-			Statement stmt = conn_user_1.createStatement();
-			ResultSet rs = stmt.executeQuery("Show Databases");
-			while(rs.next()){
-				System.out.print(rs.getString(1));
-				System.out.println();
-			}
-		} catch (SQLException e){
-			e.printStackTrace();
-		}
-
+		// try to create the table
+		insert_new_table(conn_user_1);
 		close(1);
 	}
-	public void close(int dbms_num){
-		try{
-			if(dbms_num==1){
-				conn_user_1.close();
-			}else if(dbms_num==2){
-				conn_user_2.close();
-			}else if(dbms_num==3){
-				conn_user_3.close();
+	public void insert_new_table(Connection conn){
+		if(!table_exist(conn,table_name)){
+			System.out.printf("db don't have table: %s, create it\n",table_name);
+			try{
+				String sql="CREATE TABLE "+user_table;
+				Statement stmt = conn.createStatement();
+				stmt.executeUpdate(sql);
+				stmt.close();
+			}catch (SQLException e){
+				e.printStackTrace();
 			}
-		} catch (SQLException e){
-			e.printStackTrace();
+
+			System.out.println("insert table :"+table_name);
+		}
+		else{
+			System.out.printf("db have user table\n");
 		}
 	}
-
-
 }

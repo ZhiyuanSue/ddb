@@ -1,4 +1,9 @@
-com/yizhu/thu/DB.class
 com/yizhu/thu/HDFS.class
+com/yizhu/thu/Article.class
 com/yizhu/thu/App.class
+com/yizhu/thu/Table.class
+com/yizhu/thu/DB.class
+com/yizhu/thu/Read.class
+com/yizhu/thu/Popular_Rank.class
+com/yizhu/thu/Be_Read.class
 com/yizhu/thu/User.class

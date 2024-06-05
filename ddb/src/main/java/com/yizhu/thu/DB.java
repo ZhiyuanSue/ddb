@@ -5,6 +5,10 @@ import java.sql.DriverManager;
 import java.sql.Statement;
 import java.sql.ResultSet;
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 public class DB {
     static String user = "root";
@@ -15,24 +19,11 @@ public class DB {
     static String url2_mysql = "jdbc:mysql://hadoop2:3306/";
     static String url3_mysql = "jdbc:mysql://hadoop3:3306/";
 
+    static String ddb_name = "ddb";
+    static String suffix = "?useSSL=true&allowPublicKeyRetrieval=true&serverTimezone=Asia/Shanghai";
     Connection conn_user_1 = null;
     Connection conn_user_2 = null;
     Connection conn_user_3 = null;
-
-    public void connect(int dbms_num){
-        try{
-            Class.forName(driver);
-            if(dbms_num==1){
-                conn_user_1 = DriverManager.getConnection(url1_mysql,user,pwd);
-            } else if(dbms_num==2){
-                conn_user_2 = DriverManager.getConnection(url2_mysql,user,pwd);
-            } else if(dbms_num==3){
-                conn_user_3 = DriverManager.getConnection(url3_mysql,user,pwd);
-            }
-        } catch (Exception e){
-            e.printStackTrace();
-        }
-    }
     public void init(){
         connect(1);
         connect(2);
@@ -54,6 +45,21 @@ public class DB {
         close(2);
         close(3);
     }
+    public void connect(int dbms_num){
+        try{
+            Class.forName(driver);
+            if(dbms_num==1){
+                conn_user_1 = DriverManager.getConnection(url1_mysql,user,pwd);
+            } else if(dbms_num==2){
+                conn_user_2 = DriverManager.getConnection(url2_mysql,user,pwd);
+            } else if(dbms_num==3){
+                conn_user_3 = DriverManager.getConnection(url3_mysql,user,pwd);
+            }
+        } catch (Exception e){
+            e.printStackTrace();
+        }
+    }
+
     public void close(int dbms_num){
         try{
             if(dbms_num==1){
@@ -112,5 +118,39 @@ public class DB {
             e.printStackTrace();
         }
 
+    }
+    public void listDatabaseTable(int dbms_num,String ddbname){
+        List<String> tablenames= new ArrayList<>();
+        if(dbms_num!=1&&dbms_num!=2&&dbms_num!=3){
+            System.out.println("wrong dbms_num");
+            return;
+        }
+        try{
+            Connection conn = null;
+            if(dbms_num==1) {
+                conn = DriverManager.getConnection(url1_mysql+ddbname+suffix,user,pwd);
+            } else if (dbms_num==2) {
+                conn = DriverManager.getConnection(url2_mysql+ddbname+suffix,user,pwd);
+            } else if (dbms_num==3) {
+                conn = DriverManager.getConnection(url3_mysql+ddbname+suffix,user,pwd);
+            }
+            DatabaseMetaData dbMetaData = conn.getMetaData();
+            ResultSet res =dbMetaData.getTables(null,null,"%",new String[] {"TABLE"});
+
+            System.out.printf("show database %s\n",ddbname);
+            while(res.next()) {
+                String tableName = res.getString("TABLE_NAME");
+                System.out.println("Table: " + tableName);
+                ResultSet columns = dbMetaData.getColumns(null, null, tableName, "%");
+                while (columns.next()) {
+                    String columnName = columns.getString("COLUMN_NAME");
+                    String columnType = columns.getString("TYPE_NAME");
+                    System.out.println("  Column: " + columnName + ", Type: " + columnType );
+                }
+            }
+            conn.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 }

@@ -14,12 +14,22 @@ public class App
         System.out.println( "Start test Hadoop" );
 		HDFS fs=new HDFS();
 		DB db=new DB();
+		// tables
 		User usr=new User();
+		Article art=new Article();
+		Read read = new Read();
+		Be_Read be_read = new Be_Read();
+		Popular_Rank popular_rank = new Popular_Rank();
+
 
 		fs.init();
 		bulk_hadoop(fs);
+
 		db.init();
 
+		usr.init();
+
+		db.listDatabaseTable(1,"ddb");
 		fs.close();
 
     }
