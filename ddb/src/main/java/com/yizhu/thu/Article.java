@@ -77,7 +77,19 @@ public class Article extends Table {
                 while ((line = reader.readLine()) != null) {  
                     // 假设每个分号结尾的都是一个完整的SQL语句（注意：这可能不适用于所有情况）  
                     if (line.trim().endsWith(";")) {  
-                        sqlScript.append(line).append("\n");  
+                        boolean can_append=true;
+						if(line.startsWith("  (\"")){
+							String str = line.toString();
+							String[] parts = str.split(",");
+							if(parts[4].equals(" \"technology\"") && dbms_num!=2){
+								can_append=false;
+							}
+						}
+						if (can_append){
+							sqlScript.append(line).append("\n");  
+						} else {
+							sqlScript.append("(\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\")\n");
+						}  
                         String sql = sqlScript.toString();  
                         if (!sql.trim().isEmpty()) {  
                             // 执行SQL语句  
@@ -90,7 +102,7 @@ public class Article extends Table {
 						if(line.startsWith("  (\"")){
 							String str = line.toString();
 							String[] parts = str.split(",");
-							if(parts[4].equals(" \"technology\"") && dbms_num!=3){
+							if(parts[4].equals(" \"technology\"") && dbms_num!=2){
 								can_append=false;
 							}
 						}
