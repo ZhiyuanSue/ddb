@@ -201,7 +201,7 @@ with open("article.sql", "w+") as f:
             "  `authors` char(13) DEFAULT NULL,\n" +  \
             "  `language` char(3) DEFAULT NULL,\n" +  \
             "  `text` char(31) DEFAULT NULL,\n" +  \
-            "  `image` char(32) DEFAULT NULL,\n" +  \
+            "  `image` char(255) DEFAULT NULL,\n" +  \
             "  `video` char(32) DEFAULT NULL\n) ENGINE=InnoDB DEFAULT CHARSET=utf8;\n\n")
     f.write("LOCK TABLES `article` WRITE;\n")
     f.write("INSERT INTO `article` VALUES\n")

@@ -1,8 +1,8 @@
 /apache-maven-3.9.7
 /db-generation/articles
-/db-generation/article.dat
-/db-generation/read.dat
-/db-generation/user.dat
+/db-generation/article.sql
+/db-generation/user_read.sql
+/db-generation/user.sql
 /db-generation/video
 /db-generation/image
 /db-generation/bbc_news_texts

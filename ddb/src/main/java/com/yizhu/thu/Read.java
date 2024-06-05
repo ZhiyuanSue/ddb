@@ -8,6 +8,7 @@ import java.sql.*;
 
 public class Read extends Table{
 	static String table_name = "read_table";
+	static String user_file_path = "../db-generation/user_read.sql";
 	static String table_sql = "read_table ("
     	+"id INT AUTO_INCREMENT PRIMARY KEY,"
     	+"timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP,"
