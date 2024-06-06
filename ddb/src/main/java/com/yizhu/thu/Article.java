@@ -12,20 +12,6 @@ import java.io.IOException;
 public class Article extends Table {
 	static String table_name = "article";
 	static String article_file_path = "../db-generation/article.sql";
-	static String sql = "INSERT INTO article ("
-		+"id, "
-		+"timestamp, "
-		+"aid, "
-		+"title," 
-		+"category, "
-		+"abstract, "
-		+"articleTags, "
-		+"authors, "
-		+"language, "
-		+"text, "
-		+"image, "
-		+"video) "
-		+"VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";  
 	public void init(){
 		connect(2);
 		connect(3);
@@ -110,42 +96,5 @@ public class Article extends Table {
             e.printStackTrace();  
         }
 		close(dbms_num); 
-	}
-	public void insert(
-		Connection conn,
-		Timestamp timestamp,
-		String aid,
-		String title,
-		String category,
-		String abstractText,
-		String articleTags,
-		String authors,
-		String language,
-		String text,
-		String image,
-		String video
-	){
-		try (PreparedStatement pstmt = conn.prepareStatement(sql)) {  
-
-			pstmt.setTimestamp(2, timestamp);  
-			pstmt.setString(3, aid);  
-			pstmt.setString(4, title);  
-			pstmt.setString(5, category);  
-			pstmt.setString(6, abstractText);  
-			pstmt.setString(7, articleTags);
-			pstmt.setString(8, authors);  
-			pstmt.setString(9, language);  
-			pstmt.setString(10, text);  
-			pstmt.setString(11, image);  
-			pstmt.setString(12, video);  
-		
-			int rowsAffected = pstmt.executeUpdate();  
-			if (rowsAffected > 0) {  
-				System.out.println("Data inserted successfully!");  
-			}  
-		
-		} catch (SQLException e) {  
-			e.printStackTrace();  
-		}
 	}
 }

@@ -12,23 +12,6 @@ import java.io.IOException;
 public class User extends Table{
 	static String table_name = "user_table";
 	static String user_file_path = "../db-generation/user.sql";
-	static String insert_sql = "INSERT INTO user_table ("
-			+"id, "
-			+"timestamp, "
-			+"uid, "
-			+"name, "
-			+"gender, "
-			+"email, "
-			+"phone, "
-			+"dept, "
-			+"grade, "
-			+"language, "
-			+"region, "
-			+"role, "
-			+"preferTags, "
-			+"obtainedCredits"
-			+") " 
-			+"VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";  
 	
 	public void init(){
 		connect(2);
@@ -122,46 +105,5 @@ public class User extends Table{
             e.printStackTrace();  
         }
 		close(dbms_num); 
-	}
-	public void insert(
-		Connection conn,
-		Timestamp timestamp,
-		String uid,
-		String name,
-		String gender,
-		String email,
-		String phone,
-		String dept,
-		String grade,
-		String language,
-		String region,
-		String role,
-		String preferTags,
-		int obtainedCredits
-	){
-		try (PreparedStatement pstmt = conn.prepareStatement(insert_sql)) {   
-			pstmt.setTimestamp(2, timestamp);  
-			pstmt.setString(3, uid);  
-			pstmt.setString(4, name);  
-			pstmt.setString(5, gender);  
-			pstmt.setString(6, email);  
-			pstmt.setString(7, phone);  
-			pstmt.setString(8, dept);  
-			pstmt.setString(9, grade);  
-			pstmt.setString(10, language);  
-			pstmt.setString(11, region);  
-			pstmt.setString(12, role);  
-			pstmt.setString(13, preferTags);  
-			pstmt.setInt(14, obtainedCredits);  
-		
-			// 执行插入操作  
-			int rowsAffected = pstmt.executeUpdate();  
-			if (rowsAffected > 0) {  
-				System.out.println("Data inserted successfully!");  
-			}  
-		
-		} catch (SQLException e) {  
-			e.printStackTrace();  
-		}
 	}
 }

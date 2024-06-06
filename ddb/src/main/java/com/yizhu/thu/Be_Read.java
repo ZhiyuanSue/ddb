@@ -29,7 +29,7 @@ public class Be_Read extends Table{
     	+"agreeUidList TEXT,  "
     	+"shareNum INT NOT NULL DEFAULT 0,  "
     	+"shareUidList TEXT  "
-		+");";
+		+") ENGINE=InnoDB DEFAULT CHARSET=utf8;";
 	static String sql = "INSERT INTO be_read ("
 		+"id, "
 		+"timestamp, "
@@ -56,6 +56,7 @@ public class Be_Read extends Table{
 	}
 	public void bulk(int dbms_num){
 		Map<String, String> aid_categories = new HashMap<>();  
+		Map<String, String> aid_timestamp = new HashMap<>();
 
 		Map<String, Integer>	aid_readnum = new HashMap<>();
 		Map<String, List<String>> aid_uidlist = new HashMap<>();  
@@ -83,12 +84,14 @@ public class Be_Read extends Table{
 
 		// query dbms1 (hadoop2) for article (no fragment)
 		try (Statement stmt = conn_user_2.createStatement();  
-             ResultSet rs = stmt.executeQuery("SELECT aid, category FROM article")) {  
+             ResultSet rs = stmt.executeQuery("SELECT aid, category, timestamp FROM article")) {  
   
             while (rs.next()) {  
                 String aid = rs.getString("aid");  
                 String category = rs.getString("category");  
+				String timestamp = rs.getString("timestamp");
                 aid_categories.put(aid, category);  
+				aid_timestamp.put(aid, timestamp);
             }  
         } catch (SQLException e) {  
             e.printStackTrace();  
@@ -245,6 +248,7 @@ public class Be_Read extends Table{
 		int id=0;
 		for(String aid:aids){
 			String category	=	aid_categories.get(aid);
+			String timestamp	=	aid_timestamp.get(aid);
 
 			int readnum		=	aid_readnum.get(aid);
 			int commentnum	=	aid_commentnum.get(aid);
@@ -281,15 +285,13 @@ public class Be_Read extends Table{
 			sb.append(id);  
 			String id_str=sb.toString();
 			if ( dbms_num==2 || (dbms_num==3 && category.equals("technology")) ){
-				insert(conn,id_str,"",aid,
+				insert(conn,id_str,timestamp,aid,
 					readnum,uidlist_str,
 					commentnum,commentlist_str,
 					agreenum,agreelist_str,
 					sharenum,sharelist_str);
 				id++;
 			}
-			
-			
 		}
 		System.out.printf("table be_read have been inserted %d rows data to site %d\n",id,dbms_num);
 	}

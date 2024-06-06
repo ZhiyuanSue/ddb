@@ -14,17 +14,6 @@ import java.util.Set;
 public class Read extends Table{
 	static String table_name = "user_read";
 	static String user_read_file_path = "../db-generation/user_read.sql";
-	static String sql = "INSERT INTO user_read ("
-		+"id, "
-		+"timestamp, "
-		+"uid, "
-		+"aid, "
-		+"readTimeLength, "
-		+"aggreeOrNot, "
-		+"commentOrNot, "
-		+"commentDetail, "
-		+"shareOrNot) " 
-		+"VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";  
 	public void init(){
 		connect(2);
 		connect(3);
@@ -144,35 +133,5 @@ public class Read extends Table{
             e.printStackTrace();  
         }
 		close(dbms_num); 
-	}
-	public void insert(
-		Connection conn,
-		Timestamp timestamp,
-		String uid,
-		String aid, 
-		Integer readTimeLength,
-		Boolean aggreeOrNot,
-		Boolean commentOrNot, 
-		String commentDetail,
-		Boolean shareOrNot
-	){
-		try (PreparedStatement pstmt = conn.prepareStatement(sql)) {  
-			pstmt.setTimestamp(2, timestamp);  
-			pstmt.setString(3, uid);  
-			pstmt.setString(4, aid);  
-			pstmt.setInt(5, readTimeLength);  
-			pstmt.setBoolean(6, aggreeOrNot);  
-			pstmt.setBoolean(7, commentOrNot);  
-			pstmt.setString(8, commentDetail);
-			pstmt.setString(8, null);
-			pstmt.setBoolean(9, shareOrNot);  
- 
-			int rowsAffected = pstmt.executeUpdate();  
-			if (rowsAffected > 0) {  
-				System.out.println("Data inserted successfully!");  
-			}  
-		} catch (SQLException e) {  
-			e.printStackTrace();  
-		}
 	}
 }
