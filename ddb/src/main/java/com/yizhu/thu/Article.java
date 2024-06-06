@@ -12,20 +12,6 @@ import java.io.IOException;
 public class Article extends Table {
 	static String table_name = "article";
 	static String article_file_path = "../db-generation/article.sql";
-	static String table_sql = "article ( " 
-    	+"id INT AUTO_INCREMENT PRIMARY KEY, " 
-    	+"timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP,  "
-    	+"aid VARCHAR(255) NOT NULL UNIQUE, "  
-    	+"title VARCHAR(255) NOT NULL,  "
-    	+"category VARCHAR(255) NOT NULL,  "
-    	+"abstract TEXT,  "
-    	+"articleTags TEXT, "
-    	+"authors TEXT,  "
-    	+"language VARCHAR(10) NOT NULL, "
-    	+"text TEXT NOT NULL,  "
-    	+"image VARCHAR(255),  " 
-    	+"video VARCHAR(255)   "  
-		+");";
 	static String sql = "INSERT INTO article ("
 		+"id, "
 		+"timestamp, "
@@ -44,8 +30,6 @@ public class Article extends Table {
 		connect(2);
 		connect(3);
 		// try to create the table
-		// insert_new_table(conn_user_2,table_name,table_sql);
-		// insert_new_table(conn_user_3,table_name,table_sql);
 		bulk(2);
 		bulk(3);
 
@@ -116,7 +100,7 @@ public class Article extends Table {
                     stmt.execute(sqlScript.toString());  
                 }  
   
-                System.out.println("SQL file imported successfully!");  
+                System.out.printf("SQL file %s imported to site %d successfully!\n",article_file_path,dbms_num);  
   
             } catch (SQLException e) {  
                 e.printStackTrace();  

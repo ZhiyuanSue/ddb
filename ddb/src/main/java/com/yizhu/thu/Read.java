@@ -14,17 +14,6 @@ import java.util.Set;
 public class Read extends Table{
 	static String table_name = "user_read";
 	static String user_read_file_path = "../db-generation/user_read.sql";
-	static String table_sql = "user_read ("
-    	+"id INT AUTO_INCREMENT PRIMARY KEY,"
-    	+"timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP,"
-    	+"uid VARCHAR(255) NOT NULL,"
-    	+"aid VARCHAR(255) NOT NULL,"
-    	+"readTimeLength INT,"
-    	+"aggreeOrNot BOOLEAN,"
-    	+"commentOrNot BOOLEAN,"
-    	+"commentDetail TEXT,"
-    	+"shareOrNot BOOLEAN"
-		+");";
 	static String sql = "INSERT INTO user_read ("
 		+"id, "
 		+"timestamp, "
@@ -40,8 +29,6 @@ public class Read extends Table{
 		connect(2);
 		connect(3);
 		// try to create the table
-		// insert_new_table(conn_user_2,table_name,table_sql);
-		// insert_new_table(conn_user_3,table_name,table_sql);
 		bulk(2);
 		bulk(3);
 
@@ -147,7 +134,7 @@ public class Read extends Table{
                     stmt.execute(sqlScript.toString());  
                 }  
   
-                System.out.println("SQL file imported successfully!");  
+                System.out.printf("SQL file %s imported to site %d successfully!\n",user_read_file_path,dbms_num);  
   
             } catch (SQLException e) {  
                 e.printStackTrace();  

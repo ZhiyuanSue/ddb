@@ -12,22 +12,6 @@ import java.io.IOException;
 public class User extends Table{
 	static String table_name = "user_table";
 	static String user_file_path = "../db-generation/user.sql";
-	static String table_sql = "user_table ("
-			+"id INT AUTO_INCREMENT PRIMARY KEY,"	//字符
-			+"timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP,"	//
-			+"uid VARCHAR(255) UNIQUE NOT NULL,"	//
-			+"name VARCHAR(255) NOT NULL,"
-			+"gender ENUM('male', 'female', 'Other', 'Unknown') DEFAULT 'Unknown',"
-			+"email VARCHAR(255) UNIQUE NOT NULL,"
-			+"phone VARCHAR(20) NOT NULL,"
-			+"dept VARCHAR(255) NOT NULL,"
-			+"grade VARCHAR(10) NOT NULL,"
-			+"language VARCHAR(50) NOT NULL,"
-			+"region VARCHAR(255) NOT NULL,"
-			+"role VARCHAR(50) NOT NULL,"
-			+"preferTags TEXT,"
-			+"obtainedCredits DECIMAL(10, 2) DEFAULT 0.0"
-			+");";
 	static String insert_sql = "INSERT INTO user_table ("
 			+"id, "
 			+"timestamp, "
@@ -50,8 +34,6 @@ public class User extends Table{
 		connect(2);
 		connect(3);
 		// try to create the table
-		// insert_new_table(conn_user_2,table_name,table_sql);
-		// insert_new_table(conn_user_3,table_name,table_sql);
 		bulk(2);
 		bulk(3);
 
@@ -130,7 +112,7 @@ public class User extends Table{
                     stmt.execute(sqlScript.toString());  
                 }  
   
-                System.out.println("SQL file imported successfully!");  
+                System.out.printf("SQL file %s imported to site %d successfully!\n",user_file_path,dbms_num);  
   
             } catch (SQLException e) {  
                 e.printStackTrace();  

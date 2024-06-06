@@ -145,8 +145,9 @@ public class DB {
                 while (columns.next()) {
                     String columnName = columns.getString("COLUMN_NAME");
                     String columnType = columns.getString("TYPE_NAME");
-                    System.out.println("  Column: " + columnName + ", Type: " + columnType );
+                    System.out.printf(" | " + columnName  );
                 }
+				System.out.printf(" | \n");
             }
             conn.close();
         } catch (SQLException e) {
