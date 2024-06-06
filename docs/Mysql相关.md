@@ -48,3 +48,18 @@ bind-address            = 0.0.0.0
 ```
 service mysql restart
 ```
+
+另外，我在运行的时候，会遇到因为user_read.sql文件过大，他的查询语句报错的情况，错误如下：
+```
+com.mysql.cj.jdbc.exceptions.PacketTooBigException: Packet for query is too large (109,345,691 > 67,108,864). You can change this value on the server by setting the 'max_allowed_packet' variable.
+```
+
+一个好的办法是，拆分sql查询语句，但是，我这里打算简单粗暴地更改max_allowed_packet，同样修改上述的mysqld.cnf:
+
+```
+vim /etc/mysql/mysql.conf.d/mysqld.cnf
+
+max_allowed_packet      = 1024M
+
+service mysql restart
+```
