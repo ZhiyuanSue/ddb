@@ -116,7 +116,7 @@ public class Be_Read extends Table{
 				String commentOrNot = rs.getString("commentOrNot");
 				String shareOrNot = rs.getString("shareOrNot");
 				if(!aid_categories.containsKey(aid)){
-					System.out.println("error aid "+aid+" in user_read table which is not find in article table");
+					// System.out.println("error aid "+aid+" in user_read table which is not find in article table");
 				}
 				int readnum = 0;
 				if(aid_readnum.containsKey(aid)){
@@ -185,7 +185,7 @@ public class Be_Read extends Table{
 				String commentOrNot = rs.getString("commentOrNot");
 				String shareOrNot = rs.getString("shareOrNot");
 				if(!aid_categories.containsKey(aid)){
-					System.out.println("error aid "+aid+" in user_read table which is not find in article table");
+					// System.out.println("error aid "+aid+" in user_read table which is not find in article table");
 				}
 				int readnum = 0;
 				if(aid_readnum.containsKey(aid)){

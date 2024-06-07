@@ -39,6 +39,22 @@ public class App
 		System.out.println("-------------------------[ site3 tables ]-------------------------------");
 		db.listDatabaseTable(3,"ddb");
 
+		System.out.println("-------------------------[ start  query ]-------------------------------");		
+		List<String> top_five_string =popular_rank.Query_five("1506000000000","daily");
+		String[] aidArray = top_five_string.toArray(new String[0]);
+		for (int i=0;i<5;i++){
+			String aid = aidArray[i];
+			art.connect(3);
+			System.out.println("=========== top"+i+" is "+aid);
+			String art_text=art.Query_Article_text(aid);
+			System.out.println("article text is "+art_text);
+			String art_image=art.Query_Article_images(aid);
+			System.out.println("article image is "+art_image);
+			String art_video=art.Query_Article_videos(aid);
+			System.out.println("article video is "+art_video);
+			art.close(3);
+		}
+
 		fs.close();
 
     }

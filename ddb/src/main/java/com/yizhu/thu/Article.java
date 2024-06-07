@@ -97,9 +97,9 @@ public class Article extends Table {
         }
 		close(dbms_num); 
 	}
-	public String Query_Article_text(Connection conn,String aid){
+	public String Query_Article_text(String aid){
 		String text ="";
-		try (PreparedStatement preparedStatement = conn.prepareStatement("SELECT text FROM article WHERE aid = ?")) {  
+		try (PreparedStatement preparedStatement = conn_user_3.prepareStatement("SELECT text FROM article WHERE aid = ?")) {  
 			
             preparedStatement.setString(1, aid);  
             ResultSet resultSet = preparedStatement.executeQuery();  
@@ -111,32 +111,32 @@ public class Article extends Table {
         }  
 		return text;
 	}
-	public String Query_Article_images(Connection conn,String aid){
-		String text ="";
-		try (PreparedStatement preparedStatement = conn.prepareStatement("SELECT image FROM article WHERE aid = ?")) {  
+	public String Query_Article_images(String aid){
+		String image ="";
+		try (PreparedStatement preparedStatement = conn_user_3.prepareStatement("SELECT image FROM article WHERE aid = ?")) {  
 			
             preparedStatement.setString(1, aid);  
             ResultSet resultSet = preparedStatement.executeQuery();  
             if (resultSet.next()) {  
-            	text = resultSet.getString("text");  
+            	image = resultSet.getString("image");  
             } 
         } catch (SQLException e) {  
             e.printStackTrace();  
         }  
-		return text;
+		return image;
 	}
-	public String Query_Article_vedios(Connection conn,String aid){
-		String text ="";
-		try (PreparedStatement preparedStatement = conn.prepareStatement("SELECT vedio FROM article WHERE aid = ?")) {  
+	public String Query_Article_videos(String aid){
+		String video ="";
+		try (PreparedStatement preparedStatement = conn_user_3.prepareStatement("SELECT video FROM article WHERE aid = ?")) {  
 			
             preparedStatement.setString(1, aid);  
             ResultSet resultSet = preparedStatement.executeQuery();  
             if (resultSet.next()) {  
-            	text = resultSet.getString("text");  
+            	video = resultSet.getString("video");  
             } 
         } catch (SQLException e) {  
             e.printStackTrace();  
         }  
-		return text;
+		return video;
 	}
 }
