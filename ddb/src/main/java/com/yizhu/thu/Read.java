@@ -18,8 +18,10 @@ public class Read extends Table{
 		connect(2);
 		connect(3);
 		// try to create the table
-		bulk(2);
-		bulk(3);
+		// if(!table_exist(conn_user_2,table_name))
+			bulk(2);
+		// if(!table_exist(conn_user_3,table_name))
+			bulk(3);
 
 		close(2);
 		close(3);

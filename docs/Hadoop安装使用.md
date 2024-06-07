@@ -396,3 +396,14 @@ root@e00af42b6e13:/# jps
 6853 DataNode
 ```
 
+# 安全模式
+在使用hadoop的时候，他有可能位于安全模式，然后运行就报错
+需要检查并离开安全模式
+```
+hdfs dfsadmin -report	#检查状况
+```
+
+离开安全模式
+```
+hdfs dfsadmin -safemode leave
+```

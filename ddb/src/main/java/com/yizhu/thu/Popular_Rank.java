@@ -43,10 +43,15 @@ public class Popular_Rank extends Table {
 		connect(2);
 		connect(3);
 		// try to create the table
-		insert_new_table(conn_user_2,table_name,table_sql);
-		insert_new_table(conn_user_3,table_name,table_sql);
-		bulk(2);
-		bulk(3);
+		// if(!table_exist(conn_user_2,table_name)){
+			insert_new_table(conn_user_2,table_name,table_sql);
+			bulk(2);
+		// }
+		// if(!table_exist(conn_user_3,table_name)){
+			insert_new_table(conn_user_3,table_name,table_sql);
+			bulk(3);
+		// }
+		
 		close(2);
 		close(3);
 	}
@@ -314,7 +319,7 @@ public class Popular_Rank extends Table {
             while (rs.next()) {  
                 String tmp_timestamp = rs.getString("timestamp");  
                 String articleAidList = rs.getString("articleAidList");
-				System.out.printf(articleAidList);
+				System.out.println(articleAidList);
   
                 String[] parts = articleAidList.split(",");
 				for(int i = 0;i < 5;i++){

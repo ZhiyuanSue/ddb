@@ -32,10 +32,10 @@ public class DB {
         try{
             System.out.println("try to generate a new database at "+ url2_mysql);
             createDatabase(conn_user_2,"ddb");
-            listDatabase(2);
+            // listDatabase(2);
             System.out.println("try to generate a new database at "+ url3_mysql);
             createDatabase(conn_user_3,"ddb");
-            listDatabase(3);
+            // listDatabase(3);
 
         } catch (SQLException e){
             e.printStackTrace();

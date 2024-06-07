@@ -40,15 +40,15 @@ public class HDFS{
 		hdfs = FileSystem.get(conf);
 		System.out.println(hdfs.toString());
 	}
-	public void uploadFile(String src_dirname,String dst_dirname,String filename) throws IOException{
+	public void uploadFile(String src_dirname,String dst_dirname,String filename,int id) throws IOException{
 		Path src_p = new Path(src_dirname + "/" + filename);
 		Path dst_p = new Path(HDFS_PATH + dst_dirname + "/" + filename);
 		if(hdfs.exists(dst_p)){
-			System.out.printf("at %s hava a file with same name,we ignore it\n",HDFS_PATH + dst_dirname + "/"+filename);
+			System.out.printf("at %s hava a file with same name,we ignore it id %d\n",HDFS_PATH + dst_dirname + "/"+filename,id);
 			return;
 		}
 		hdfs.copyFromLocalFile(false,src_p,dst_p);
-		System.out.printf("successfully upload %s\n",filename);
+		System.out.printf("successfully upload %s id %d\n",filename,id);
 	}
 	public void listFiles(String dirname) throws IOException {
 		Path p = new Path(dirname);
@@ -87,6 +87,31 @@ public class HDFS{
 		} catch (IOException e){
 			e.printStackTrace();
 		}
+	}
+	public byte[] readFileBytes(String hdfs_dirname,String filename){
+		Path hdfs_p = new Path(HDFS_PATH + hdfs_dirname + "/" + filename);
+		byte[] buffer = null;
+		FSDataInputStream inputStream = null;  
+		
+		try {  
+			System.out.printf("hdfs path is %s\n",hdfs_p);
+			if(!hdfs.exists(hdfs_p)){
+				System.out.printf("no such file in hdfs %s\n",hdfs_p);
+			}
+            inputStream = hdfs.open(hdfs_p);  
+  
+            long fileLength = hdfs.getFileStatus(hdfs_p).getLen();  
+  
+            buffer = new byte[(int) fileLength];  
+  
+            IOUtils.readFully(inputStream, buffer, 0, buffer.length);  
+  
+        } catch (IOException e) {
+			e.printStackTrace();
+		} finally {  
+            IOUtils.closeStream(inputStream);  
+        }  
+		return buffer;
 	}
 	public void close(){
 		try{
