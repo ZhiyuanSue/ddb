@@ -51,7 +51,7 @@ public class Article extends Table {
 						if(line.startsWith("  (\"")){
 							String str = line.toString();
 							String[] parts = str.split(",");
-							if(parts[4].equals(" \"technology\"") && dbms_num!=2){
+							if(parts[4].equals(" \"technology\"") && dbms_num!=3){
 								can_append=false;
 							}
 						}
@@ -72,7 +72,7 @@ public class Article extends Table {
 						if(line.startsWith("  (\"")){
 							String str = line.toString();
 							String[] parts = str.split(",");
-							if(parts[4].equals(" \"technology\"") && dbms_num!=2){
+							if(parts[4].equals(" \"technology\"") && dbms_num!=3){
 								can_append=false;
 							}
 						}
@@ -96,5 +96,47 @@ public class Article extends Table {
             e.printStackTrace();  
         }
 		close(dbms_num); 
+	}
+	public String Query_Article_text(Connection conn,String aid){
+		String text ="";
+		try (PreparedStatement preparedStatement = conn.prepareStatement("SELECT text FROM article WHERE aid = ?")) {  
+			
+            preparedStatement.setString(1, aid);  
+            ResultSet resultSet = preparedStatement.executeQuery();  
+            if (resultSet.next()) {  
+            	text = resultSet.getString("text");  
+            } 
+        } catch (SQLException e) {  
+            e.printStackTrace();  
+        }  
+		return text;
+	}
+	public String Query_Article_images(Connection conn,String aid){
+		String text ="";
+		try (PreparedStatement preparedStatement = conn.prepareStatement("SELECT image FROM article WHERE aid = ?")) {  
+			
+            preparedStatement.setString(1, aid);  
+            ResultSet resultSet = preparedStatement.executeQuery();  
+            if (resultSet.next()) {  
+            	text = resultSet.getString("text");  
+            } 
+        } catch (SQLException e) {  
+            e.printStackTrace();  
+        }  
+		return text;
+	}
+	public String Query_Article_vedios(Connection conn,String aid){
+		String text ="";
+		try (PreparedStatement preparedStatement = conn.prepareStatement("SELECT vedio FROM article WHERE aid = ?")) {  
+			
+            preparedStatement.setString(1, aid);  
+            ResultSet resultSet = preparedStatement.executeQuery();  
+            if (resultSet.next()) {  
+            	text = resultSet.getString("text");  
+            } 
+        } catch (SQLException e) {  
+            e.printStackTrace();  
+        }  
+		return text;
 	}
 }

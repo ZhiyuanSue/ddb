@@ -286,4 +286,49 @@ public class Popular_Rank extends Table {
   
         return Arrays.asList(aidarray);
     }  
+
+	public List<String> Query_five(String timestamp,String temporalGranularity){
+		connect(2);
+		connect(3);
+		
+		String sql="";
+		Connection conn=null;
+		String[] aidarray = new String[5]; 
+		if (temporalGranularity=="daily"){
+			conn=conn_user_2;
+			sql = "SELECT timestamp, articleAidList FROM popular_rank WHERE temporalGranularity = 'daily'";
+		}else if (temporalGranularity=="daily"){
+			conn=conn_user_3;
+			sql = "SELECT timestamp, articleAidList FROM popular_rank WHERE temporalGranularity = 'weekly'";
+		}else if (temporalGranularity=="daily"){
+			conn=conn_user_3;
+			sql = "SELECT timestamp, articleAidList FROM popular_rank WHERE temporalGranularity = 'monthly'";
+		}else{
+			System.out.printf("wrong temporalGranularity\n");
+			return null;
+		}
+
+		try (Statement stmt = conn.createStatement();  
+            ResultSet rs = stmt.executeQuery(sql)) {  
+  
+            while (rs.next()) {  
+                String tmp_timestamp = rs.getString("timestamp");  
+                String articleAidList = rs.getString("articleAidList");
+				System.out.printf(articleAidList);
+  
+                String[] parts = articleAidList.split(",");
+				for(int i = 0;i < 5;i++){
+					aidarray[i]=parts[i];
+				}
+            }  
+  
+        } catch (SQLException e) {  
+            e.printStackTrace();  
+        }  
+		
+		close(2);
+		close(3);
+
+		return Arrays.asList(aidarray);
+	}
 }

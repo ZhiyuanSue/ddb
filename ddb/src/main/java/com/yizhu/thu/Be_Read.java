@@ -82,8 +82,8 @@ public class Be_Read extends Table{
 			return;
 		}
 
-		// query dbms1 (hadoop2) for article (no fragment)
-		try (Statement stmt = conn_user_2.createStatement();  
+		// query dbms2 (hadoop3) for article (no fragment)
+		try (Statement stmt = conn_user_3.createStatement();  
              ResultSet rs = stmt.executeQuery("SELECT aid, category, timestamp FROM article")) {  
   
             while (rs.next()) {  
@@ -116,7 +116,7 @@ public class Be_Read extends Table{
 				String commentOrNot = rs.getString("commentOrNot");
 				String shareOrNot = rs.getString("shareOrNot");
 				if(!aid_categories.containsKey(aid)){
-					System.out.println("error aid in user_read table which is not find in article table");
+					System.out.println("error aid "+aid+" in user_read table which is not find in article table");
 				}
 				int readnum = 0;
 				if(aid_readnum.containsKey(aid)){
@@ -175,7 +175,7 @@ public class Be_Read extends Table{
         }  
 
 		// dbms2
-		try (Statement stmt = conn_user_2.createStatement();  
+		try (Statement stmt = conn_user_3.createStatement();  
              ResultSet rs = stmt.executeQuery(sql)) {  
   
             while (rs.next()) {  
@@ -185,7 +185,7 @@ public class Be_Read extends Table{
 				String commentOrNot = rs.getString("commentOrNot");
 				String shareOrNot = rs.getString("shareOrNot");
 				if(!aid_categories.containsKey(aid)){
-					System.out.println("error aid in user_read table which is not find in article table");
+					System.out.println("error aid "+aid+" in user_read table which is not find in article table");
 				}
 				int readnum = 0;
 				if(aid_readnum.containsKey(aid)){
@@ -284,7 +284,7 @@ public class Be_Read extends Table{
 			StringBuilder sb = new StringBuilder();  
 			sb.append(id);  
 			String id_str=sb.toString();
-			if ( dbms_num==2 || (dbms_num==3 && category.equals("technology")) ){
+			if ( dbms_num==3 || (dbms_num==2 && category.equals("science")) ){
 				insert(conn,id_str,timestamp,aid,
 					readnum,uidlist_str,
 					commentnum,commentlist_str,
