@@ -166,8 +166,8 @@ def gen_an_read (i):
             "\"" + read["commentDetail"] + "\")"
 
 with open("user.sql", "w+") as f:
-    f.write("DROP TABLE IF EXISTS `user`;\n")
-    f.write("CREATE TABLE `user` (\n" + \
+    f.write("DROP TABLE IF EXISTS `user_table`;\n")
+    f.write("CREATE TABLE `user_table` (\n" + \
             "  `timestamp` char(14) DEFAULT NULL,\n" + \
             "  `id` char(5) DEFAULT NULL,\n" + \
             "  `uid` char(5) DEFAULT NULL,\n" + \
@@ -182,8 +182,8 @@ with open("user.sql", "w+") as f:
             "  `role` char(6) DEFAULT NULL,\n" +  \
             "  `preferTags` char(7) DEFAULT NULL,\n" +  \
             "  `obtainedCredits` char(3) DEFAULT NULL\n) ENGINE=InnoDB DEFAULT CHARSET=utf8;\n\n")
-    f.write("LOCK TABLES `user` WRITE;\n")
-    f.write("INSERT INTO `user` VALUES\n")
+    f.write("LOCK TABLES `user_table` WRITE;\n")
+    f.write("INSERT INTO `user_table` VALUES\n")
     for i in range (USERS_NUM-1):
         f.write("  " + gen_an_user(i) + ",\n")
     f.write("  " + gen_an_user(USERS_NUM-1) + ";\n")
@@ -202,7 +202,7 @@ with open("article.sql", "w+") as f:
             "  `authors` char(13) DEFAULT NULL,\n" +  \
             "  `language` char(3) DEFAULT NULL,\n" +  \
             "  `text` char(31) DEFAULT NULL,\n" +  \
-            "  `image` char(32) DEFAULT NULL,\n" +  \
+            "  `image` char(255) DEFAULT NULL,\n" +  \
             "  `video` char(32) DEFAULT NULL\n) ENGINE=InnoDB DEFAULT CHARSET=utf8;\n\n")
     f.write("LOCK TABLES `article` WRITE;\n")
     f.write("INSERT INTO `article` VALUES\n")

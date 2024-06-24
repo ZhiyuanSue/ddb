@@ -1,0 +1,85 @@
+version: "3.8"
+networks:
+  hadoop-bridge:
+    driver: bridge
+x-common-settings: &common-settings
+  build: .
+  command: bash /docker-start.sh
+  volumes:
+    - ./setup/docker-start.sh:/docker-start.sh
+    - ../:/home/ddb
+    - ./setup/core-site.xml:/usr/local/hadoop/etc/hadoop/core-site.xml
+    - ./setup/hdfs-site.xml:/usr/local/hadoop/etc/hadoop/hdfs-site.xml
+    - ./setup/mapred-site.xml:/usr/local/hadoop/etc/hadoop/mapred-site.xml
+    - ./setup/yarn-site.xml:/usr/local/hadoop/etc/hadoop/yarn-site.xml
+    - ./setup/workers:/usr/local/hadoop/etc/hadoop/workers
+  environment:
+    - HDFS_DATANODE_USER=root
+    - HDFS_DATANODE_SECURE_USER=hdfs
+    - HDFS_NAMENODE_USER=root
+    - HDFS_SECONDARYNAMENODE_USER=root
+    - YARN_RESOURCEMANAGER_USER=root
+    - HDFS_DATANODE_SECURE_USER=root
+    - YARN_NODEMANAGER_USER=root
+services:
+  ddb1:
+    <<: *common-settings
+    command: bash -c "START_HADOOP=1 bash /docker-start.sh"
+    ports:
+      - 10086:80
+      - "10087:22"
+      - 10088:50070 # namenode http-addres
+      - 8088:8088 # yarn.resourcemanager.webapp.address
+      - 9000:9000
+      - 16010:16010
+      - 2181:2181
+      - 8080:8080
+      - 16000:16000
+      - 9020:9020
+      - 42239:42239
+      - 60000:60000
+    networks:
+      hadoop-bridge:
+        aliases:
+          - hadoop1
+  ddb2:
+    <<: *common-settings
+    networks:
+      hadoop-bridge:
+        aliases:
+          - hadoop2
+  ddb3:
+    <<: *common-settings
+    networks:
+      hadoop-bridge:
+        aliases:
+          - hadoop3
+  cache:
+    image: redis:6.2-alpine
+    command: redis-server --requirepass root --bind 0.0.0.0
+    networks:
+      - hadoop-bridge
+  client:
+    build: ./client
+    working_dir: /home/ddb/ddb
+    volumes:
+      - ../:/home/ddb
+    command: tail -f /dev/null
+    networks:
+      - hadoop-bridge
+  percona-server:
+    image: percona/pmm-server:2
+    ports:
+      - 8443:443
+    networks:
+      - hadoop-bridge
+  percona-client:
+    # build: ./percona
+    image: percona/pmm-client:2
+    # command: tail -f /dev/null
+    command: bash /startup.sh
+    entrypoint: ""
+    volumes:
+      - ./percona/startup.sh:/startup.sh
+    networks:
+      - hadoop-bridge

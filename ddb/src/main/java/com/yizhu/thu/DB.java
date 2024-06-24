@@ -87,7 +87,7 @@ public class DB {
             Statement stmt = conn.createStatement();
             String sql= "CREATE DATABASE " + dbname;
             stmt.executeUpdate(sql);
-            System.out.println("no database " + dbname + "" + " and we have create a new one");
+            System.out.println("no database " + dbname + "" + " and we have created a new one");
             stmt.close();
         }else{
             System.out.println("database "+dbname+" has already exist,we just ignore it");

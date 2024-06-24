@@ -1,0 +1,6 @@
+bulk user ../db-generation/user.sql
+bulk article ../db-generation/article.sql
+bulk user_read ../db-generation/user_read.sql
+populate be_read
+populate popular_rank
+query 5 popular_rank
