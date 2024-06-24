@@ -302,10 +302,10 @@ public class Popular_Rank extends Table {
 		if (temporalGranularity=="daily"){
 			conn=conn_user_2;
 			sql = "SELECT timestamp, articleAidList FROM popular_rank WHERE temporalGranularity = 'daily'";
-		}else if (temporalGranularity=="daily"){
+		}else if (temporalGranularity=="weekly"){
 			conn=conn_user_3;
 			sql = "SELECT timestamp, articleAidList FROM popular_rank WHERE temporalGranularity = 'weekly'";
-		}else if (temporalGranularity=="daily"){
+		}else if (temporalGranularity=="monthly"){
 			conn=conn_user_3;
 			sql = "SELECT timestamp, articleAidList FROM popular_rank WHERE temporalGranularity = 'monthly'";
 		}else{

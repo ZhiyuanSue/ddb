@@ -66,7 +66,7 @@ public class App
 			return;
 
 		System.out.println("-------------------------[ start  query ]-------------------------------");	
-		Jedis jedis = new Jedis("localhost", 6379);  
+		Jedis jedis = new Jedis("cache", 6379);  
 		String redis_password = "root";	
 		jedis.auth(redis_password); 
 		List<String> top_five_string =popular_rank.Query_five("1506000000000","daily");
@@ -148,7 +148,7 @@ public class App
 		for (File file : file_list){
 			String src_dirname=file.getParent();
 			String filename=file.getName();
-			// fs.uploadFile(src_dirname,"/",filename,id);
+			fs.uploadFile(src_dirname,"/",filename,id);
 			id++;
 		}
 		System.out.printf("total have %d files\n",file_list.size());
